@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tin tức và cập nhật mới nhất từ MechaZone">
+    <meta name="keywords" content="tin tức, blog, công nghệ">
+    <title>MechaZone - Tin Tức</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+<body id="top">
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">MechaZone</a>
+            </div>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="about.html">Giới Thiệu</a></li>
+                    <li><a href="services.html">Dịch Vụ</a></li>
+                    <li><a href="products.html">Sản Phẩm</a></li>
+                    <li><a href="news.html" class="active">Tin Tức</a></li>
+                    <li><a href="contact.html">Liên Hệ</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#login" class="btn-login">Đăng Nhập</a>
+                <a href="#register" class="btn-register">Đăng Ký</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="news">
+        <div class="container">
+            <h1>Tin Tức & Blog</h1>
+            <div class="news-grid">
+                <div class="news-item">
+                    <img src="images/news1.jpg" alt="Tin tức 1" loading="lazy">
+                    <h3>Tiêu Đề Bài Viết 1</h3>
+                    <p>Ngày đăng: 10/04/2025</p>
+                    <p>Tóm tắt nội dung bài viết về công nghệ mới.</p>
+                    <a href="#news1-detail" class="card-link">Đọc thêm</a>
+                </div>
+                <div class="news-item">
+                    <img src="images/news2.jpg" alt="Tin tức 2" loading="lazy">
+                    <h3>Tiêu Đề Bài Viết 2</h3>
+                    <p>Ngày đăng: 08/04/2025</p>
+                    <p>Tóm tắt nội dung bài viết về chiến lược kinh doanh.</p>
+                    <a href="#news2-detail" class="card-link">Đọc thêm</a>
+                </div>
+            </div>
+            <div class="news-detail" id="news1-detail">
+                <h2>Tiêu Đề Bài Viết 1</h2>
+                <img src="images/news1-detail.jpg" alt="Tin tức 1 chi tiết" loading="lazy">
+                <p>Nội dung chi tiết bài viết về công nghệ mới, các xu hướng và ứng dụng trong doanh nghiệp.</p>
+                <div class="share-buttons">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/share?url=#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <h3>MechaZone</h3>
+                    <p>123 Đường ABC, TP. Hồ Chí Minh</p>
+                    <p>Email: contact@abccorp.com</p>
+                    <p>Phone: 0123 456 789</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liên Kết Nhanh</h3>
+                    <ul>
+                        <li><a href="index.html">Trang Chủ</a></li>
+                        <li><a href="about.html">Giới Thiệu</a></li>
+                        <li><a href="services.html">Dịch Vụ</a></li>
+                        <li><a href="contact.html">Liên Hệ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Kết Nối Với Chúng Tôi</h3>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <p class="footer-copy">© 2025 MechaZone. All rights reserved.</p>
+            <a href="#top" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+        </div>
+    </footer>
+</body>
+</html>
