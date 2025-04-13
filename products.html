@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.ico">
 </head>
-<body id="top">
+<body>
     <header class="navbar">
         <div class="container">
             <div class="logo">
@@ -32,6 +32,7 @@
             <div class="auth-buttons">
                 <a href="#login" class="btn-login">Đăng Nhập</a>
                 <a href="#register" class="btn-register">Đăng Ký</a>
+                <a href="#cart" class="btn-cart"><i class="fas fa-shopping-cart"></i> Giỏ Hàng (0)</a>
             </div>
         </div>
     </header>
@@ -39,34 +40,598 @@
     <section class="products">
         <div class="container">
             <h1>Sản Phẩm Của Chúng Tôi</h1>
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="images/product1.jpg" alt="Sản phẩm 1" loading="lazy">
-                    <h3>Sản Phẩm 1</h3>
-                    <p>100.000 VNĐ</p>
-                    <a href="#product1-detail" class="card-link">Xem chi tiết</a>
+            <div class="product-filter">
+                <div class="filter-group">
+                    <label for="category">Danh Mục:</label>
+                    <select id="category" onchange="filterProducts()">
+                        <option value="all">Tất Cả</option>
+                        <option value="gunpla">Gunpla</option>
+                        <option value="figure">Figure Anime</option>
+                        <option value="accessory">Phụ Kiện</option>
+                    </select>
                 </div>
-                <div class="product-card">
-                    <img src="images/product2.jpg" alt="Sản phẩm 2" loading="lazy">
-                    <h3>Sản Phẩm 2</h3>
-                    <p>200.000 VNĐ</p>
-                    <a href="#product2-detail" class="card-link">Xem chi tiết</a>
-                </div>
-                <div class="product-card">
-                    <img src="images/product3.jpg" alt="Sản phẩm 3" loading="lazy">
-                    <h3>Sản Phẩm 3</h3>
-                    <p>300.000 VNĐ</p>
-                    <a href="#product3-detail" class="card-link">Xem chi tiết</a>
+                <div class="filter-group">
+                    <label for="price">Giá:</label>
+                    <select id="price" onchange="filterProducts()">
+                        <option value="all">Tất Cả</option>
+                        <option value="under-100">Dưới 100.000đ</option>
+                        <option value="100-200">100.000đ - 200.000đ</option>
+                        <option value="200-300">200.000đ - 300.000đ</option>
+                        <option value="above-300">Trên 300.000đ</option>
+                    </select>
                 </div>
             </div>
-            <div class="product-detail" id="product1-detail">
-                <h2>Sản Phẩm 1</h2>
-                <img src="images/product1-detail.jpg" alt="Sản phẩm 1 chi tiết" loading="lazy">
-                <p>Sản phẩm công nghệ cao với tính năng vượt trội, phù hợp cho doanh nghiệp.</p>
-                <p>Giá: 100.000 VNĐ</p>
+            <div class="product-grid">
+                <!-- Sản phẩm 1 -->
+                <div class="product-card" data-category="gunpla" data-price="100000">
+                    <img src="images/product1.jpg" alt="Gunpla 1" loading="lazy">
+                    <h3>Gunpla 1</h3>
+                    <p>100.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product1')">Xem chi tiết</button>
+                </div>
+                <!-- Sản phẩm 2 -->
+                <div class="product-card" data-category="gunpla" data-price="150000">
+                    <img src="images/product2.jpg" alt="Gunpla 2" loading="lazy">
+                    <h3>Gunpla 2</h3>
+                    <p>150.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product2')">Xem chi tiết</button>
+                </div>
+                <!-- Sản phẩm 3 -->
+                <div class="product-card" data-category="figure" data-price="200000">
+                    <img src="images/product3.jpg" alt="Figure Anime 1" loading="lazy">
+                    <h3>Figure Anime 1</h3>
+                    <p>200.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product3')">Xem chi tiết</button>
+                </div>
+                <!-- Sản phẩm 4 -->
+                <div class="product-card" data-category="figure" data-price="250000">
+                    <img src="images/product4.jpg" alt="Figure Anime 2" loading="lazy">
+                    <h3>Figure Anime 2</h3>
+                    <p>250.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product4')">Xem chi tiết</button>
+                </div>
+                <!-- Sản phẩm 5 -->
+                <div class="product-card" data-category="accessory" data-price="50000">
+                    <img src="images/product5.jpg" alt="Phụ Kiện 1" loading="lazy">
+                    <h3>Phụ Kiện 1</h3>
+                    <p>50.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product5')">Xem chi tiết</button>
+                </div>
+                <!-- Sản phẩm 6 -->
+                <div class="product-card" data-category="accessory" data-price="80000">
+                    <img src="images/product6.jpg" alt="Phụ Kiện 2" loading="lazy">
+                    <h3>Phụ Kiện 2</h3>
+                    <p>80.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product6')">Xem chi tiết</button>
+                </div>
+                <!-- Sản phẩm 7 -->
+                <div class="product-card" data-category="gunpla" data-price="350000">
+                    <img src="images/product7.jpg" alt="Gunpla 3" loading="lazy">
+                    <h3>Gunpla 3</h3>
+                    <p>350.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product7')">Xem chi tiết</button>
+                </div>
+                <!-- Sản phẩm 8 -->
+                <div class="product-card" data-category="figure" data-price="300000">
+                    <img src="images/product8.jpg" alt="Figure Anime 3" loading="lazy">
+                    <h3>Figure Anime 3</h3>
+                    <p>300.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product8')">Xem chi tiết</button>
+                </div>
+                <!-- Sản phẩm 9 -->
+                <div class="product-card" data-category="accessory" data-price="120000">
+                    <img src="images/product9.jpg" alt="Phụ Kiện 3" loading="lazy">
+                    <h3>Phụ Kiện 3</h3>
+                    <p>120.000 VNĐ</p>
+                    <button class="card-link" onclick="openModal('product9')">Xem chi tiết</button>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">×</span>
+            <div class="modal-body">
+                <!-- Product 1 Details -->
+                <div id="product1" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product1.jpg" alt="Thumbnail 1">
+                        <img src="images/product1.jpg" alt="Thumbnail 2">
+                        <img src="images/product1.jpg" alt="Thumbnail 3">
+                        <img src="images/product1.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Gunpla 1</h2>
+                    <div class="rating">
+                        <span>5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>40 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">100.000đ</span>
+                        <span class="old-price">130.000đ</span>
+                        <span class="discount">23%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (1) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Gunpla 1 là mô hình lắp ráp Gundam HG chất lượng cao, phù hợp cho người mới bắt đầu.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity1')">-</button>
+                            <input type="text" id="quantity1" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity1')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+                <!-- Product 2 Details -->
+                <div id="product2" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product2.jpg" alt="Thumbnail 1">
+                        <img src="images/product2.jpg" alt="Thumbnail 2">
+                        <img src="images/product2.jpg" alt="Thumbnail 3">
+                        <img src="images/product2.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Gunpla 2</h2>
+                    <div class="rating">
+                        <span>4.5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                        <span>35 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">150.000đ</span>
+                        <span class="old-price">180.000đ</span>
+                        <span class="discount">17%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (2) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Gunpla 2 là mô hình RG với chi tiết sắc nét, dành cho người chơi có kinh nghiệm.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity2')">-</button>
+                            <input type="text" id="quantity2" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity2')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+                <!-- Product 3 Details -->
+                <div id="product3" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product3.jpg" alt="Thumbnail 1">
+                        <img src="images/product3.jpg" alt="Thumbnail 2">
+                        <img src="images/product3.jpg" alt="Thumbnail 3">
+                        <img src="images/product3.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Figure Anime 1</h2>
+                    <div class="rating">
+                        <span>5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>50 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">200.000đ</span>
+                        <span class="old-price">250.000đ</span>
+                        <span class="discount">20%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (3) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Figure Anime 1 là mô hình nhân vật anime với chi tiết sống động, phù hợp cho sưu tầm.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity3')">-</button>
+                            <input type="text" id="quantity3" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity3')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+                <!-- Product 4 Details -->
+                <div id="product4" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product4.jpg" alt="Thumbnail 1">
+                        <img src="images/product4.jpg" alt="Thumbnail 2">
+                        <img src="images/product4.jpg" alt="Thumbnail 3">
+                        <img src="images/product4.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Figure Anime 2</h2>
+                    <div class="rating">
+                        <span>4.8 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>45 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">250.000đ</span>
+                        <span class="old-price">300.000đ</span>
+                        <span class="discount">17%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (4) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Figure Anime 2 là mô hình nhân vật anime với thiết kế độc đáo, phù hợp cho sưu tầm.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity4')">-</button>
+                            <input type="text" id="quantity4" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity4')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+                <!-- Product 5 Details -->
+                <div id="product5" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product5.jpg" alt="Thumbnail 1">
+                        <img src="images/product5.jpg" alt="Thumbnail 2">
+                        <img src="images/product5.jpg" alt="Thumbnail 3">
+                        <img src="images/product5.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Phụ Kiện 1</h2>
+                    <div class="rating">
+                        <span>4 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>20 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">50.000đ</span>
+                        <span class="old-price">70.000đ</span>
+                        <span class="discount">29%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (1) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Phụ Kiện 1 là dụng cụ cắt mô hình, giúp bạn hoàn thiện mô hình dễ dàng.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity5')">-</button>
+                            <input type="text" id="quantity5" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity5')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+                <!-- Product 6 Details -->
+                <div id="product6" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product6.jpg" alt="Thumbnail 1">
+                        <img src="images/product6.jpg" alt="Thumbnail 2">
+                        <img src="images/product6.jpg" alt="Thumbnail 3">
+                        <img src="images/product6.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Phụ Kiện 2</h2>
+                    <div class="rating">
+                        <span>4.2 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                        <span>25 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">80.000đ</span>
+                        <span class="old-price">100.000đ</span>
+                        <span class="discount">20%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (2) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Phụ Kiện 2 là bộ sơn chi tiết, giúp mô hình của bạn thêm sống động.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity6')">-</button>
+                            <input type="text" id="quantity6" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity6')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+                <!-- Product 7 Details -->
+                <div id="product7" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product7.jpg" alt="Thumbnail 1">
+                        <img src="images/product7.jpg" alt="Thumbnail 2">
+                        <img src="images/product7.jpg" alt="Thumbnail 3">
+                        <img src="images/product7.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Gunpla 3</h2>
+                    <div class="rating">
+                        <span>5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>60 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">350.000đ</span>
+                        <span class="old-price">400.000đ</span>
+                        <span class="discount">13%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (5) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Gunpla 3 là mô hình PG với độ chi tiết cao, dành cho người chơi chuyên nghiệp.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity7')">-</button>
+                            <input type="text" id="quantity7" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity7')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+                <!-- Product 8 Details -->
+                <div id="product8" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product8.jpg" alt="Thumbnail 1">
+                        <img src="images/product8.jpg" alt="Thumbnail 2">
+                        <img src="images/product8.jpg" alt="Thumbnail 3">
+                        <img src="images/product8.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Figure Anime 3</h2>
+                    <div class="rating">
+                        <span>4.9 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                        <span>55 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">300.000đ</span>
+                        <span class="old-price">350.000đ</span>
+                        <span class="discount">14%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (6) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Figure Anime 3 là mô hình nhân vật anime phiên bản giới hạn, lý tưởng cho sưu tầm.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity8')">-</button>
+                            <input type="text" id="quantity8" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity8')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+                <!-- Product 9 Details -->
+                <div id="product9" class="product-details" style="display: none;">
+                    <div class="modal-thumbnails">
+                        <img src="images/product9.jpg" alt="Thumbnail 1">
+                        <img src="images/product9.jpg" alt="Thumbnail 2">
+                        <img src="images/product9.jpg" alt="Thumbnail 3">
+                        <img src="images/product9.jpg" alt="Thumbnail 4">
+                    </div>
+                    <h2>Phụ Kiện 3</h2>
+                    <div class="rating">
+                        <span>4.5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
+                        <span>30 Đánh Giá</span>
+                    </div>
+                    <div class="price">
+                        <span class="current-price">120.000đ</span>
+                        <span class="old-price">150.000đ</span>
+                        <span class="discount">20%</span>
+                    </div>
+                    <div class="share">
+                        <span>Chia sẻ:</span>
+                        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                        <span class="like">Đã thích (3) <i class="fas fa-heart"></i></span>
+                    </div>
+                    <p>Phụ Kiện 3 là giá đỡ mô hình, giúp trưng bày mô hình của bạn đẹp hơn.</p>
+                    <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
+                    <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
+                    <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
+                    <div class="options">
+                        <div class="size">
+                            <label><strong>Kích Thước:</strong></label>
+                            <button>S</button>
+                            <button>M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                        <div class="color">
+                            <label><strong>Màu Sắc:</strong></label>
+                            <button>Đen</button>
+                            <button>Trắng</button>
+                            <button>Xanh</button>
+                        </div>
+                        <div class="quantity">
+                            <label><strong>Số Lượng:</strong></label>
+                            <button onclick="decreaseQuantity('quantity9')">-</button>
+                            <input type="text" id="quantity9" value="1" readonly>
+                            <button onclick="increaseQuantity('quantity9')">+</button>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn-add-cart">Thêm Vào Giỏ Hàng</button>
+                        <button class="btn-order">Mua Ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container">
@@ -74,7 +639,7 @@
                 <div class="footer-info">
                     <h3>MechaZone</h3>
                     <p>123 Đường ABC, TP. Hồ Chí Minh</p>
-                    <p>Email: contact@abccorp.com</p>
+                    <p>Email: <a href="/cdn-cgi/l/email-protection#1c6f696c6c736e685c71797f747d66737279327f7371"><span class="__cf_email__" data-cfemail="24575154554b5650644941474c455e4b4a410a474b49">[email&#160;protected]</span></a></p>
                     <p>Phone: 0123 456 789</p>
                 </div>
                 <div class="footer-links">
@@ -97,5 +662,68 @@
             <a href="#top" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
         </div>
     </footer>
+
+    <script>
+        function openModal(productId) {
+            document.getElementById('productModal').style.display = 'block';
+            document.querySelectorAll('.product-details').forEach(detail => detail.style.display = 'none');
+            document.getElementById(productId).style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        function increaseQuantity(inputId) {
+            let input = document.getElementById(inputId);
+            let value = parseInt(input.value);
+            input.value = value + 1;
+        }
+
+        function decreaseQuantity(inputId) {
+            let input = document.getElementById(inputId);
+            let value = parseInt(input.value);
+            if (value > 1) {
+                input.value = value - 1;
+            }
+        }
+
+        function filterProducts() {
+            const categoryFilter = document.getElementById('category').value;
+            const priceFilter = document.getElementById('price').value;
+            const products = document.querySelectorAll('.product-card');
+
+            products.forEach(product => {
+                const category = product.getAttribute('data-category');
+                const price = parseInt(product.getAttribute('data-price'));
+
+                let categoryMatch = categoryFilter === 'all' || category === categoryFilter;
+                let priceMatch = true;
+
+                if (priceFilter === 'under-100') {
+                    priceMatch = price < 100000;
+                } else if (priceFilter === '100-200') {
+                    priceMatch = price >= 100000 && price <= 200000;
+                } else if (priceFilter === '200-300') {
+                    priceMatch = price > 200000 && price <= 300000;
+                } else if (priceFilter === 'above-300') {
+                    priceMatch = price > 300000;
+                }
+
+                if (categoryMatch && priceMatch) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById('productModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
