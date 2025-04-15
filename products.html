@@ -1,4 +1,33 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -55,74 +84,74 @@
                     <select id="price" onchange="filterProducts()">
                         <option value="all">Tất Cả</option>
                         <option value="under-100">Dưới 100.000đ</option>
-                        <option value="100-200">100.000đ - 200.000đ</option>
-                        <option value="200-300">200.000đ - 300.000đ</option>
-                        <option value="above-300">Trên 300.000đ</option>
+                        <option value="100-500">100.000đ - 500.000đ</option>
+                        <option value="500-1000">500.000đ - 1.000.000đ</option>
+                        <option value="1000-2000">1.000.000đ - 2.000.000đ</option>
                     </select>
                 </div>
             </div>
             <div class="product-grid">
                 <!-- Sản phẩm 1 -->
-                <div class="product-card" data-category="gunpla" data-price="100000">
-                    <img src="images/product1.jpg" alt="Gunpla 1" loading="lazy">
-                    <h3>Gunpla 1</h3>
-                    <p>100.000 VNĐ</p>
+                <div class="product-card" data-category="gunpla" data-price="640000">
+                    <img src="https://th.bing.com/th/id/OIP._0BY_GI9M9mY46GXFGGvwgHaEr?w=713&h=450&rs=1&pid=ImgDetMain" alt="Gunpla 1" loading="lazy">
+                    <h3>HG 1/144 Calibarn Permet Score 5 Bandai</h3>
+                    <p>640.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product1')">Xem chi tiết</button>
                 </div>
                 <!-- Sản phẩm 2 -->
-                <div class="product-card" data-category="gunpla" data-price="150000">
-                    <img src="images/product2.jpg" alt="Gunpla 2" loading="lazy">
-                    <h3>Gunpla 2</h3>
-                    <p>150.000 VNĐ</p>
+                <div class="product-card" data-category="gunpla" data-price="1150000">
+                    <img src="https://th.bing.com/th/id/R.f02175ec9449e31880af0e8e5c4c398c?rik=dxamW7furN9fsA&riu=http%3a%2f%2fwww.xmodeltoys.com%2fphoto%2f1664-1.jpg&ehk=q004Wqgp5R0eUQqlgmnENi%2bPHMv3PPmFUk5c%2f1R%2b%2ba0%3d&risl=&pid=ImgRaw&r=0" alt="Gunpla 2" loading="lazy">
+                    <h3>RG RX-93-V2 Hi-V Gundam Bandai</h3>
+                    <p>1.150.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product2')">Xem chi tiết</button>
                 </div>
                 <!-- Sản phẩm 3 -->
-                <div class="product-card" data-category="figure" data-price="200000">
-                    <img src="images/product3.jpg" alt="Figure Anime 1" loading="lazy">
-                    <h3>Figure Anime 1</h3>
-                    <p>200.000 VNĐ</p>
+                <div class="product-card" data-category="gunpla" data-price="2000000">
+                    <img src="https://product.hstatic.net/1000231532/product/cf6413980216c3820407251_grande_3a969e79c60c4a1abc942b96d0609510_grande_31f5ec71f3694d9e8d2f54febba86e40_master.jpg" alt="Gunpla 3" loading="lazy">
+                    <h3>MG 1/100 Full Armor Unicorn Gundam Ver.Ka Bandai</h3>
+                    <p>2.000.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product3')">Xem chi tiết</button>
                 </div>
                 <!-- Sản phẩm 4 -->
-                <div class="product-card" data-category="figure" data-price="250000">
-                    <img src="images/product4.jpg" alt="Figure Anime 2" loading="lazy">
-                    <h3>Figure Anime 2</h3>
-                    <p>250.000 VNĐ</p>
+                <div class="product-card" data-category="figure" data-price="1750000">
+                    <img src="https://product.hstatic.net/1000231532/product/inh_bup_be_rengoku_kyojuro_kimetsu_no_yaiba_nendoroid_doll_gia_re_nhat_102780ee6fd64e43b9847cd30bd64063_master.jpg" alt="Figure Anime 1" loading="lazy">
+                    <h3>Nendoroid Doll Kyojuro Rengoku - Demon Slayer Kimetsu No Yaiba</h3>
+                    <p>1.750.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product4')">Xem chi tiết</button>
                 </div>
                 <!-- Sản phẩm 5 -->
-                <div class="product-card" data-category="accessory" data-price="50000">
-                    <img src="images/product5.jpg" alt="Phụ Kiện 1" loading="lazy">
-                    <h3>Phụ Kiện 1</h3>
-                    <p>50.000 VNĐ</p>
+                <div class="product-card" data-category="figure" data-price="1600000">
+                    <img src="https://product.hstatic.net/1000231532/product/me_manga_ban_ichiban_kuji_one_piece_the_great_pirates_100_landscapes_d_54f5b5ef36e04ed39cd4f782c2f41594_master.jpg" alt="Figure Anime 2" loading="lazy">
+                    <h3>ICHIBAN KUJI ONE PIECE - THE GREAT PIRATES 100 LANDSCAPES D</h3>
+                    <p>1.600.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product5')">Xem chi tiết</button>
                 </div>
                 <!-- Sản phẩm 6 -->
-                <div class="product-card" data-category="accessory" data-price="80000">
-                    <img src="images/product6.jpg" alt="Phụ Kiện 2" loading="lazy">
-                    <h3>Phụ Kiện 2</h3>
-                    <p>80.000 VNĐ</p>
+                <div class="product-card" data-category="figure" data-price="460000">
+                    <img src="https://product.hstatic.net/1000231532/product/chainsaw_man_break_time_collection_vol.2_power_03a1d7f6c77844f28433a2490f143572_master.jpg" alt="Phụ Kiện 2" loading="lazy">
+                    <h3>Chainsaw Man Break Time Collection Vol.2 - Power</h3>
+                    <p>460.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product6')">Xem chi tiết</button>
                 </div>
                 <!-- Sản phẩm 7 -->
-                <div class="product-card" data-category="gunpla" data-price="350000">
-                    <img src="images/product7.jpg" alt="Gunpla 3" loading="lazy">
-                    <h3>Gunpla 3</h3>
-                    <p>350.000 VNĐ</p>
+                <div class="product-card" data-category="accessory" data-price="640000">
+                    <img src="https://product.hstatic.net/200000326537/product/s-l1600__7__58d5dc5024ee48bea84a308d158aae55_grande.jpg" alt="Accessory 1" loading="lazy">
+                    <h3>Kềm 1 lưỡi bén cao cấp Dspiae ST-A 3.0</h3>
+                    <p>640.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product7')">Xem chi tiết</button>
                 </div>
                 <!-- Sản phẩm 8 -->
-                <div class="product-card" data-category="figure" data-price="300000">
-                    <img src="images/product8.jpg" alt="Figure Anime 3" loading="lazy">
-                    <h3>Figure Anime 3</h3>
-                    <p>300.000 VNĐ</p>
+                <div class="product-card" data-category="accessory" data-price="350000">
+                    <img src="https://file.hstatic.net/1000231532/file/gunpla_shop_ban_bo_dung_cu_rap_gundam_17_mon_41863e630e094bbaa5eb94db1b70ea7c_grande.jpg" alt="Accessory 2" loading="lazy">
+                    <h3>Combo dụng cụ lắp ráp mô hình Gundam cơ bản</h3>
+                    <p>350.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product8')">Xem chi tiết</button>
                 </div>
                 <!-- Sản phẩm 9 -->
-                <div class="product-card" data-category="accessory" data-price="120000">
-                    <img src="images/product9.jpg" alt="Phụ Kiện 3" loading="lazy">
-                    <h3>Phụ Kiện 3</h3>
-                    <p>120.000 VNĐ</p>
+                <div class="product-card" data-category="accessory" data-price="50000">
+                    <img src="https://product.hstatic.net/200000326537/product/153_5025_s_rftzgef87hmpixg5nk8scuqi3y8u_9d1d5c2fef6c4dc2a750cc3917b3997c_grande.jpg" alt="Accessory 3" loading="lazy">
+                    <h3>BANDAI SPIRITS PARTS SEPARATOR - Dụng cụ tách part</h3>
+                    <p>50.000 VNĐ</p>
                     <button class="card-link" onclick="openModal('product9')">Xem chi tiết</button>
                 </div>
             </div>
@@ -137,20 +166,20 @@
                 <!-- Product 1 Details -->
                 <div id="product1" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product1.jpg" alt="Thumbnail 1">
-                        <img src="images/product1.jpg" alt="Thumbnail 2">
-                        <img src="images/product1.jpg" alt="Thumbnail 3">
-                        <img src="images/product1.jpg" alt="Thumbnail 4">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8MXtVnnEP0cwYl0XOId3KMOZ3mAKl65iYB_O32VahRZyFMpqYQbtpzc85eyl0hvfHTzp3J5QavLe62EmIYvfqUQXQe_y00aFmqghgkqe8yjEy-TWNmC7E35sGmTMva6ZvacHHYMoh_eJRidQSwYLnUDPsGnbeE2q0WtQwyauKUWheBV7iYaA-6Mi-VQ/s16000-rw/Screenshot%202024-03-25%20072013.png" alt="Thumbnail 1">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgwojgQ-qpB1irlPJ2OhZ_9OGh0nhtTK98YMmG_uZKfGifOWe44l8G1vzu_gYKzFdrhHAQek-CHJ_-1aN5qPV_sf559E6nXlBsDVWcwoZrQVUFM7Xv4mfPSfxcqBo5L0x7pJGmVgNGRYXVZo63znyoCdqa67_u5jXpT7XP-oBukFhvyTou_yuRW3Cqkqg/s16000-rw/hg%20gundam%20calibarn%20permet%20score%205%20(1).jpg" alt="Thumbnail 2">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDmpmSUcuMNn5aYyHKr3-rD457XLsAnnwSDP5kQWU1ZQB-twDcRAzRfAZZ0Cmg97fuk2f8Es9KSQJM1d9xInURgW7y_LDz-TXfhmPeSgB7MHlWxshzAmv2btPJYG3iEQ4lvbi1qezfdccSNvDHfvSqosj3vgCypEqdnZEB6P5QaNkSDumwEM6sWhpGlA/s16000-rw/hg%20gundam%20calibarn%20permet%20score%205%20(2).jpg" alt="Thumbnail 3">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiuUHKVJEq_OfHsFDaVu5JYeiD4hZNlUtK0KIaG-n25ao_znV9wxCuRRmwn-f_2DPVjBXA16b06cu-L-lpDf-cqrevE4gEJZJjRN0j9xm3o1ZAZyUthbbwlEQlRGx9W4n-Avv_SMJjqgWqC67ctRNHQoBR9wDn6xcCh3Z1THboN_SXL7K45dZYscg6lgA/s16000-rw/hg%20gundam%20calibarn%20permet%20score%205%20(6).jpg" alt="Thumbnail 4">
                     </div>
-                    <h2>Gunpla 1</h2>
+                    <h2>HG 1/144 Calibarn Permet Score 5 Bandai</h2>
                     <div class="rating">
                         <span>5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                         <span>40 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">100.000đ</span>
-                        <span class="old-price">130.000đ</span>
-                        <span class="discount">23%</span>
+                        <span class="current-price">640.000đ</span>
+                        <span class="old-price">850.000đ</span>
+                        <span class="discount">-24%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -159,24 +188,18 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (1) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Gunpla 1 là mô hình lắp ráp Gundam HG chất lượng cao, phù hợp cho người mới bắt đầu.</p>
+                        <ul>
+                            <p><strong>Mô tả sản phẩm</strong></p>
+                            <li>Giống như Aerial, phần sừng và Permet trên ngực được sơn sẵn hoàn toàn trên một runnet riêng.</li>
+                            <li>Sở hữu 11 các Bit-Stave và có thể kết hợp lại thành khiên từ Aerial Rebuild</li>
+                            <li>Vũ khí chính là "Cây chổi" Variable Rod Rifle, không chỉ là cây pháo cannon tầm xa cực mạnh và còn đóng vai trò hỗ trợ Gundam Calibarn bay đến đích với tốc độ cao với 4 chiếc tên lửa thruster phía sau.</li>
+                            <li>Điểm đặc biệt là đây là phiên bản mới phát hành với dạng "P-Bandai", Shell Unit sẽ là màu Đỏ hay vì màu Cầu Vồng giống như bản thường, nhựa sẽ mới hơn..</li>
+                        </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity1')">-</button>
@@ -192,20 +215,20 @@
                 <!-- Product 2 Details -->
                 <div id="product2" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product2.jpg" alt="Thumbnail 1">
-                        <img src="images/product2.jpg" alt="Thumbnail 2">
-                        <img src="images/product2.jpg" alt="Thumbnail 3">
-                        <img src="images/product2.jpg" alt="Thumbnail 4">
+                        <img src="https://www.xmodeltoys.com/photo/1664-3.jpg" alt="Thumbnail 1">
+                        <img src="https://www.xmodeltoys.com/photo/1664-2.jpg" alt="Thumbnail 2">
+                        <img src="https://www.xmodeltoys.com/photo/1664-4.jpg" alt="Thumbnail 3">
+                        <img src="https://www.xmodeltoys.com/photo/1664-8.jpg" alt="Thumbnail 4">
                     </div>
-                    <h2>Gunpla 2</h2>
+                    <h2>RG RX-93-V2 Hi-V Gundam Bandai</h2>
                     <div class="rating">
                         <span>4.5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
                         <span>35 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">150.000đ</span>
-                        <span class="old-price">180.000đ</span>
-                        <span class="discount">17%</span>
+                        <span class="current-price">1.120.000đ</span>
+                        <span class="old-price">1.200.000đ</span>
+                        <span class="discount">-6%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -214,24 +237,18 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (2) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Gunpla 2 là mô hình RG với chi tiết sắc nét, dành cho người chơi có kinh nghiệm.</p>
+                    <ul>
+                        <p><strong>Mô tả sản phẩm</strong></p>
+                        <li>Cấp độ RG với tỷ lệ 1/144</li>
+                        <li>Độ chi tiết cao, khớp chuyển động linh hoạt. Ráp theo kiểu bấm khớp, không cần dùng keo dán</li>
+                        <li>Thuộc Series: Mobile Suit Gundam</li>
+                        <li>Trang bị: Beam Rifle, Nu Hyper Bazooka, Shield, Beam Saber</li>
+                    </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity2')">-</button>
@@ -247,20 +264,20 @@
                 <!-- Product 3 Details -->
                 <div id="product3" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product3.jpg" alt="Thumbnail 1">
-                        <img src="images/product3.jpg" alt="Thumbnail 2">
-                        <img src="images/product3.jpg" alt="Thumbnail 3">
-                        <img src="images/product3.jpg" alt="Thumbnail 4">
+                        <img src="https://azgundam.com/wp-content/uploads/2018/08/MG-Full-Armor-Unicorn-Ver.Ka-3-e1557809643150.jpg" alt="Thumbnail 1">
+                        <img src="https://file.hstatic.net/1000231532/file/gunpla_shop_ban_full_armor_unicorn_gundam_ver.ka_mg.jpg" alt="Thumbnail 2">
+                        <img src="https://product.hstatic.net/200000326537/product/b4c9adcd-1c18-440d-9db5-4ba397793aa2_eca85809fac340899e6be5fba683abae_grande.jpg" alt="Thumbnail 3">
+                        <img src="https://www.gundam.my/images/sell_products/interactive/1207/1.jpg" alt="Thumbnail 4">
                     </div>
-                    <h2>Figure Anime 1</h2>
+                    <h2>MG 1/100 Full Armor Unicorn Gundam Ver.Ka Bandai</h2>
                     <div class="rating">
                         <span>5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                         <span>50 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">200.000đ</span>
-                        <span class="old-price">250.000đ</span>
-                        <span class="discount">20%</span>
+                        <span class="current-price">2.000.000đ</span>
+                        <span class="old-price">2.200.000đ</span>
+                        <span class="discount">-9%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -269,24 +286,19 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (3) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Figure Anime 1 là mô hình nhân vật anime với chi tiết sống động, phù hợp cho sưu tầm.</p>
+                    <ul>
+                        <p><strong>Mô tả sản phẩm</strong></p>
+                        <li>Cấp độ MG với tỷ lệ 1/100.</li>
+                        <li>Độ chi tiết cao, có khung xương chuyển động linh hoạt. Ráp theo kiểu bấm khớp, không cần dùng keo dán.</li>
+                        <li>Thuộc Series: Mobile Suit Gundam Unicorn</li>
+                        <li>Trang bị: Two Beam Magnum x2, Hyper Bazooka x2, Triple Missile Pod x2, Grenade Launcher x2, Beam Gatling Gun x6, Shield x3, Beam Saber x4, Hyper Beam Javelin x2</li>
+                        <li>Unicorn Gundam đổi mode được</li>
+                    </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity3')">-</button>
@@ -302,20 +314,20 @@
                 <!-- Product 4 Details -->
                 <div id="product4" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product4.jpg" alt="Thumbnail 1">
-                        <img src="images/product4.jpg" alt="Thumbnail 2">
-                        <img src="images/product4.jpg" alt="Thumbnail 3">
-                        <img src="images/product4.jpg" alt="Thumbnail 4">
+                        <img src="https://product.hstatic.net/1000231532/product/ien_trang_phuc_sat_quy_doi_viem_tru_cho_nendoroid_doll_rengoku_kyojuro_f27d88439ef04919bc655335e0e3fb27_master.jpg" alt="Thumbnail 1">
+                        <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ltq7arpzxeyy08" alt="Thumbnail 2">
+                        <img src="https://cdn.shopify.com/s/files/1/0445/3357/9943/products/NendoroidDollDemonSlayerKyojuroRengokuAnimeFigureYattaJapan4.jpg?v=1680859534" alt="Thumbnail 3">
+                        <img src="https://product.hstatic.net/1000231532/product/nendoroid_doll_kyojuro_rengoku_-_demon_slayer_kimetsu_no_yaiba_6752bc1f5a0546ef9b2d3705113213d9_master.jpg" alt="Thumbnail 4">
                     </div>
-                    <h2>Figure Anime 2</h2>
+                    <h2>Nendoroid Doll Kyojuro Rengoku - Demon Slayer Kimetsu No Yaiba</h2>
                     <div class="rating">
                         <span>4.8 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                         <span>45 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">250.000đ</span>
-                        <span class="old-price">300.000đ</span>
-                        <span class="discount">17%</span>
+                        <span class="current-price">1.750.000đ</span>
+                        <span class="old-price">1.900.000</span>
+                        <span class="discount">-7%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -324,24 +336,19 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (4) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Figure Anime 2 là mô hình nhân vật anime với thiết kế độc đáo, phù hợp cho sưu tầm.</p>
+                    <ul>
+                        <p><strong>Mô tả sản phẩm</strong></p>
+                        <li>Thuộc Series: Demon Slayer Kimetsu No Yaiba</li>
+                        <li>Thiết kế trang phục/họa tiết: Mieko Akimoto</li>
+                        <li>Bao gồm: Figure (with barefoot), Nichirin Blade (drawn/sheathed), Haori, Corps Uniform, Zori sandals, Hands, Magnetic Base.</li>
+                        <li>Chất liệu: Nhựa ABS & PVC</li>
+                        <li>Kích thước: Khoảng 14cm</li>
+                    </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity4')">-</button>
@@ -357,20 +364,19 @@
                 <!-- Product 5 Details -->
                 <div id="product5" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product5.jpg" alt="Thumbnail 1">
-                        <img src="images/product5.jpg" alt="Thumbnail 2">
-                        <img src="images/product5.jpg" alt="Thumbnail 3">
-                        <img src="images/product5.jpg" alt="Thumbnail 4">
+                        <img src="https://product.hstatic.net/1000231532/product/me_manga_ban_ichiban_kuji_one_piece_the_great_pirates_100_landscapes_d_54f5b5ef36e04ed39cd4f782c2f41594_master.jpg" alt="Thumbnail 1">
+                        <img src="https://product.hstatic.net/1000231532/product/ichiban_kuji_one_piece_the_great_pirates_100_landscapes_d_14de7bc2c96549aeb321e223e6b83849.jpg" alt="Thumbnail 2">
+                        <img src="https://file.hstatic.net/1000231532/file/hiban_kuji_one_piece_the_great_pirates_100_landscapes_d_chat_luong_cao_5c7e9de436444cd18aa4851fe4c5d7a5_grande.jpg" alt="Thumbnail 3">
                     </div>
-                    <h2>Phụ Kiện 1</h2>
+                    <h2>ICHIBAN KUJI ONE PIECE - THE GREAT PIRATES 100 LANDSCAPES D</h2>
                     <div class="rating">
                         <span>4 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                         <span>20 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">50.000đ</span>
-                        <span class="old-price">70.000đ</span>
-                        <span class="discount">29%</span>
+                        <span class="current-price">1.600.000đ</span>
+                        <span class="old-price">1.799.000</span>
+                        <span class="discount">-11%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -379,24 +385,19 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (1) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Phụ Kiện 1 là dụng cụ cắt mô hình, giúp bạn hoàn thiện mô hình dễ dàng.</p>
+                    <ul>
+                        <p><strong>Mô tả sản phẩm</strong></p>
+                        <li>Mô hình tĩnh, không cử động được</li>
+                        <li>Kích thước cao khoảng 16 cm</li>
+                        <li>Chất liệu nhựa cao cấp</li>
+                        <li>Mô hình chính hãng của Banpresto - Bandai</li>
+                        <li>Sản phẩm thực tế có thể hơi khác trong hình</li>
+                    </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity5')">-</button>
@@ -412,20 +413,20 @@
                 <!-- Product 6 Details -->
                 <div id="product6" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product6.jpg" alt="Thumbnail 1">
-                        <img src="images/product6.jpg" alt="Thumbnail 2">
-                        <img src="images/product6.jpg" alt="Thumbnail 3">
-                        <img src="images/product6.jpg" alt="Thumbnail 4">
+                        <img src="https://global.toysanta.jp/cdn/shop/products/p-4y3f000ya3-001_2_grande.jpg?v=1691745157" alt="Thumbnail 1">
+                        <img src="https://i.ytimg.com/vi/aQEsEmwyg00/hqdefault.jpg" alt="Thumbnail 2">
+                        <img src="https://cdn.salla.sa/ZdmXW/uGNPwON5BGC3PVdsZW7vRL8qX74LlUS8XLmCFaj1.jpg" alt="Thumbnail 3">
+                        
                     </div>
-                    <h2>Phụ Kiện 2</h2>
+                    <h2>Chainsaw Man Break Time Collection Vol.2 - Power</h2>
                     <div class="rating">
                         <span>4.2 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
                         <span>25 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">80.000đ</span>
-                        <span class="old-price">100.000đ</span>
-                        <span class="discount">20%</span>
+                        <span class="current-price">460.000đ</span>
+                        <span class="old-price">580.000</span>
+                        <span class="discount">-20%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -434,24 +435,19 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (2) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Phụ Kiện 2 là bộ sơn chi tiết, giúp mô hình của bạn thêm sống động.</p>
+                    <ul>
+                        <p><strong>Mô tả sản phẩm</strong></p>
+                        <li>Mô hình tĩnh, không cử động được</li>
+                        <li>Kích thước: cao khoảng 9cm</li>
+                        <li>Chất liệu nhựa cao cấp</li>
+                        <li>Mô hình chính hãng của Banpresto - Bandai</li>
+                        <li>Sản phẩm thực tế có thể hơi khác trong hình</li>
+                    </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity6')">-</button>
@@ -467,20 +463,20 @@
                 <!-- Product 7 Details -->
                 <div id="product7" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product7.jpg" alt="Thumbnail 1">
-                        <img src="images/product7.jpg" alt="Thumbnail 2">
-                        <img src="images/product7.jpg" alt="Thumbnail 3">
-                        <img src="images/product7.jpg" alt="Thumbnail 4">
+                        <img src="https://product.hstatic.net/200000326537/product/s-l1600__1__3ccac4705a1a447fafbf881b1a51cc89_master.jpg" alt="Thumbnail 1">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB20STYWdWgUYyeMN7pRoSfZqXT6OxSOujGw&s" alt="Thumbnail 2">
+                        <img src="https://bizweb.dktcdn.net/thumb/1024x1024/100/382/833/products/1-2043ad7a-41f6-4277-ae84-6259a9614218.jpg?v=1619969066677" alt="Thumbnail 3">
+                        <img src="https://product.hstatic.net/200000326537/product/s-l1600__5__6c2dbd56f87849ec8b93be317d77d61d_master.jpg" alt="Thumbnail 4">
                     </div>
-                    <h2>Gunpla 3</h2>
+                    <h2>Kềm 1 lưỡi bén cao cấp Dspiae ST-A 3.0</h2>
                     <div class="rating">
                         <span>5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                         <span>60 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">350.000đ</span>
-                        <span class="old-price">400.000đ</span>
-                        <span class="discount">13%</span>
+                        <span class="current-price">640.000đ</span>
+                        <span class="old-price">700.000đ</span>
+                        <span class="discount">-8%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -489,24 +485,18 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (5) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Gunpla 3 là mô hình PG với độ chi tiết cao, dành cho người chơi chuyên nghiệp.</p>
+                    <ul>
+                        <p><strong>Mô tả sản phẩm</strong></p>
+                        <li>Hãng sản xuất: DSPIAE</li>
+                        <li>Mã sản phẩm: ST-A 3.0</li>
+                        <li>Cấu tạo gồm 1 lưỡi bén và 1 lưỡi phẳng</li>
+                        <li>Giúp cắt các chi tiết nhựa khỏi runner hiệu quả.</li>
+                    </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity7')">-</button>
@@ -522,20 +512,20 @@
                 <!-- Product 8 Details -->
                 <div id="product8" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product8.jpg" alt="Thumbnail 1">
-                        <img src="images/product8.jpg" alt="Thumbnail 2">
-                        <img src="images/product8.jpg" alt="Thumbnail 3">
-                        <img src="images/product8.jpg" alt="Thumbnail 4">
+                        <img src="https://file.hstatic.net/1000231532/file/shop_gundam_ban_bo_dung_cu_rap_gundam_17_mon_0648e22fa4b642b7bd504ad2ba535f92_grande.jpg" alt="Thumbnail 1">
+                        <img src="https://file.hstatic.net/1000231532/file/mua_dung_cu_rap_gundam_gia_re_5099c995a8d644588d7c42d8b01d618b_grande.jpg" alt="Thumbnail 2">
+                        <img src="https://file.hstatic.net/1000231532/file/dung_cu_rap_mo_hinh_gunpla_2f8a61968bf1498d955494919c53f3ed_grande.jpg" alt="Thumbnail 3">
+                        <img src="https://file.hstatic.net/1000231532/file/mua_ban_dung_cu_lap_rap_mo_hinh_tai_viet_nam_888e6fa8016d4a72a3595480cb51079f_grande.jpg" alt="Thumbnail 4">
                     </div>
-                    <h2>Figure Anime 3</h2>
+                    <h2>Combo dụng cụ lắp ráp mô hình Gundam cơ bản</h2>
                     <div class="rating">
                         <span>4.9 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                         <span>55 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">300.000đ</span>
-                        <span class="old-price">350.000đ</span>
-                        <span class="discount">14%</span>
+                        <span class="current-price">350.000đ</span>
+                        <span class="old-price">400.000đ</span>
+                        <span class="discount">-12%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -544,24 +534,19 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (6) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Figure Anime 3 là mô hình nhân vật anime phiên bản giới hạn, lý tưởng cho sưu tầm.</p>
+                    <ul>
+                        <p><strong>Mô tả sản phẩm</strong></p>
+                        <p>Các dụng cụ bao gồm</p>
+                        <li>Nhóm cắt tỉa: kềm cắt part, dao tỉa part, kéo cắt decal</li>
+                        <li>Nhóm xử lý bề mặt part: các loại dũa kim loại và chà nhám</li>
+                        <li>Nhóm hoàn thiện: nhíp dán decal, bút kẻ lằn</li>
+                        <li>Nhóm hỗ trợ: tách part, thước đo, hộp đựng part, khung dựng runner để dễ tìm theo thứ tự</li>
+                    </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity8')">-</button>
@@ -577,20 +562,20 @@
                 <!-- Product 9 Details -->
                 <div id="product9" class="product-details" style="display: none;">
                     <div class="modal-thumbnails">
-                        <img src="images/product9.jpg" alt="Thumbnail 1">
-                        <img src="images/product9.jpg" alt="Thumbnail 2">
-                        <img src="images/product9.jpg" alt="Thumbnail 3">
-                        <img src="images/product9.jpg" alt="Thumbnail 4">
+                        <img src="https://product.hstatic.net/200000326537/product/155_5025_s_hdnfyhwd4ohtyy83xaui6bpexa8t_ffb480affdcb48d1a5e79ea4a69226bf_master.jpg" alt="Thumbnail 1">
+                        <img src="https://product.hstatic.net/200000326537/product/156_5025_s_ogm974v6gfemkxj5qrd7o01of6a5_45f00c08f96147439eef981d357adcd6_master.jpg" alt="Thumbnail 2">
+                        <img src="https://acecards.com/cdn/shop/products/Bandai-Gunpla-Spirits-Parts-Separator-2_800x.jpg?v=1744388140" alt="Thumbnail 3">
+                        
                     </div>
-                    <h2>Phụ Kiện 3</h2>
+                    <h2>BANDAI SPIRITS PARTS SEPARATOR - Dụng cụ tách part</h2>
                     <div class="rating">
                         <span>4.5 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></span>
                         <span>30 Đánh Giá</span>
                     </div>
                     <div class="price">
-                        <span class="current-price">120.000đ</span>
-                        <span class="old-price">150.000đ</span>
-                        <span class="discount">20%</span>
+                        <span class="current-price">50.000đ</span>
+                        <span class="old-price">80.000đ</span>
+                        <span class="discount">-37%</span>
                     </div>
                     <div class="share">
                         <span>Chia sẻ:</span>
@@ -599,24 +584,15 @@
                         <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
                         <span class="like">Đã thích (3) <i class="fas fa-heart"></i></span>
                     </div>
-                    <p>Phụ Kiện 3 là giá đỡ mô hình, giúp trưng bày mô hình của bạn đẹp hơn.</p>
+                    <ul>
+                        <p><strong>Mô tả sản phẩm</strong></p>
+                        <li>Dụng cụ chuyên dụng để tách part mô hình nhựa, Gundam</li>
+                    </ul>
                     <p><strong>Vận Chuyển:</strong> Nhận từ 12 Th04 - 16 Th04, phí giao 40đ</p>
                     <p><strong>Tặng Voucher:</strong> 415.000đ, nếu giao sau thời gian trên.</p>
                     <p><strong>An Tâm Mua Sắm:</strong> Trả hàng miễn phí 15 ngày</p>
                     <div class="options">
-                        <div class="size">
-                            <label><strong>Kích Thước:</strong></label>
-                            <button>S</button>
-                            <button>M</button>
-                            <button>L</button>
-                            <button>XL</button>
-                        </div>
-                        <div class="color">
-                            <label><strong>Màu Sắc:</strong></label>
-                            <button>Đen</button>
-                            <button>Trắng</button>
-                            <button>Xanh</button>
-                        </div>
+                        
                         <div class="quantity">
                             <label><strong>Số Lượng:</strong></label>
                             <button onclick="decreaseQuantity('quantity9')">-</button>
@@ -702,12 +678,12 @@
 
                 if (priceFilter === 'under-100') {
                     priceMatch = price < 100000;
-                } else if (priceFilter === '100-200') {
-                    priceMatch = price >= 100000 && price <= 200000;
-                } else if (priceFilter === '200-300') {
-                    priceMatch = price > 200000 && price <= 300000;
-                } else if (priceFilter === 'above-300') {
-                    priceMatch = price > 300000;
+                } else if (priceFilter === '100-500') {
+                    priceMatch = price >= 100000 && price <= 500000;
+                } else if (priceFilter === '500-1000') {
+                    priceMatch = price > 500000 && price <= 1000000;
+                } else if (priceFilter === '1000-2000') {
+                    priceMatch = price > 1000000 && price <= 2000000;
                 }
 
                 if (categoryMatch && priceMatch) {
@@ -725,5 +701,5 @@
             }
         }
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'930829fc8b3dc98f',t:'MTc0NDY4NTcyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
