@@ -213,7 +213,6 @@ body {
 
 .service-card img,
 .product-card img,
-.news-item img,
 .team-member img,
 .service-detail img,
 .product-detail img,
@@ -222,6 +221,38 @@ body {
     width: 100%;
     height: 200px;
     object-fit: cover;
+}
+
+/* NEW ITEMS IMG */
+.news-detail img,
+.flex_box img,
+.news-item img{
+    width: 100%;
+    height: auto;
+}
+.flex_box {
+    display: flex;
+    justify-content: space-around; /* Hoặc space-between, center, etc. */
+    align-items: center;
+  }
+  
+.flex_box img {
+    max-width: 100px; /* Giới hạn kích thước ảnh */
+    margin: 5px;
+}
+
+.zoomable {
+    width: 100px; /* Kích thước ban đầu của ảnh */
+    cursor: pointer; /* Hiển thị con trỏ chỉ tay khi hover */
+    transition: transform 0.3s ease-in-out; /* Tạo hiệu ứng mềm mại */
+}
+  
+.zoomable:hover {
+    transform: scale(2); /* Phóng to ảnh khi hover */
+}
+  
+.zoomable:active {
+    transform: scale(5); /* Phóng to hơn khi click */
 }
 
 .service-card h3,
@@ -270,6 +301,31 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 2rem;
     margin-bottom: 20px;
+}
+
+.flex_box {
+    display: flex;
+    justify-content: space-around; /* Hoặc space-between, center, etc. */
+    align-items: center;
+  }
+  
+.flex_box img {
+    max-width: 100px; /* Giới hạn kích thước ảnh */
+    margin: 5px;
+}
+
+.zoomable {
+    width: 100px; /* Kích thước ban đầu của ảnh */
+    cursor: pointer; /* Hiển thị con trỏ chỉ tay khi hover */
+    transition: transform 0.3s ease-in-out; /* Tạo hiệu ứng mềm mại */
+}
+  
+.zoomable:hover {
+    transform: scale(2); /* Phóng to ảnh khi hover */
+}
+  
+.zoomable:active {
+    transform: scale(5); /* Phóng to hơn khi click */
 }
 
 /* Product Filter */
